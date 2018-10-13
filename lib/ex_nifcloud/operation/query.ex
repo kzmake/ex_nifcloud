@@ -3,7 +3,7 @@ defmodule ExNifcloud.Operation.Query do
   Datastructure representing an operation on a Query based Nifcloud service
   """
 
-  defstruct path: "/",
+  defstruct path: "/api/",
             params: %{},
             service: nil,
             action: nil,
@@ -14,7 +14,7 @@ end
 
 defimpl ExNifcloud.Operation, for: ExNifcloud.Operation.Query do
   def perform(operation, config) do
-    data = operation.params |> URI.encode_query()
+    data = operation.params
 
     url =
       operation
@@ -29,6 +29,9 @@ defimpl ExNifcloud.Operation, for: ExNifcloud.Operation.Query do
     parser = operation.parser
 
     cond do
+      is_function(parser, 1) ->
+        parser.(result)
+
       is_function(parser, 2) ->
         parser.(result, operation.action)
 
@@ -39,6 +42,4 @@ defimpl ExNifcloud.Operation, for: ExNifcloud.Operation.Query do
         result
     end
   end
-
-  def stream!(_, _), do: nil
 end

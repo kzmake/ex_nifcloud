@@ -13,9 +13,9 @@ defmodule ExNifcloud.Request do
   def request(http_method, url, data, headers, config, service) do
     body =
       case data do
-        [] -> "{}"
+        [] -> %{}
         d when is_binary(d) -> d
-        _ -> config[:json_codec].encode!(data)
+        _ -> data
       end
 
     request_and_retry(http_method, url, service, config, headers, body, {:attempt, 1})
@@ -25,22 +25,25 @@ defmodule ExNifcloud.Request do
       do: {:error, reason}
 
   def request_and_retry(method, url, service, config, headers, req_body, {:attempt, attempt}) do
-    full_headers = ExNifcloud.Auth.headers(method, url, service, config, headers, req_body)
+    body = ExNifcloud.Auth.body(method, url, req_body, config)
 
-    with {:ok, full_headers} <- full_headers do
+    with {:ok, body} <- body do
       safe_url = replace_spaces(url)
 
+      body = body |> URI.encode_query
+
       if config[:debug_requests] do
+        Logger.debug("Request Method: #{inspect(method)}}")
+        Logger.debug("Request HEADERS: #{inspect(headers)}")
         Logger.debug("Request URL: #{inspect(safe_url)}")
-        Logger.debug("Request HEADERS: #{inspect(full_headers)}")
-        Logger.debug("Request BODY: #{inspect(req_body)}")
+        Logger.debug("Request BODY: #{inspect(body)}")
       end
 
       case config[:http_client].request(
              method,
              safe_url,
-             req_body,
-             full_headers,
+             body,
+             headers,
              Map.get(config, :http_opts, [])
            ) do
         {:ok, %{status_code: status} = resp} when status in 200..299 or status == 304 ->

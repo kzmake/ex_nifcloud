@@ -51,16 +51,16 @@ end
 Preparation
 -----------
 
-Nifcloud APIs を利用するに当たり、 `ACCESS_KEY_ID` と `SECRET_ACCESS_KEY` を設定する必要があります。今のところ設定方法は環境変数だけ。
+Nifcloud APIs を利用するに当たり、 `ACCESS_KEY_ID` と `SECRET_ACCESS_KEY` を設定する必要があります。今のところ設定方法は環境変数だけ。
 
-環境変数で設定する:
+環境変数 で設定する:
 
 ```sh
 export ACCESS_KEY_ID="your access key"
 export SECRET_ACCESS_KEY="your secret access key"
 ```
 
-TODO:
+TODO:
 そのうち、 `config/*.exs` で優先順位をいい感じに設定できるようにする予定。
 
 ```elixir
@@ -68,8 +68,8 @@ use Mix.Config
 
 config :ex_nifcloud,
        debug_requests: true,
-       access_key_id: [{:system, "ACCESS_KEY_ID"}, {:path, "path/to/credential"}],
-       secret_access_key: [{:system, "SECRET_ACCESS_KEY"}, {:path, "path/to/credential"}],
+       access_key_id: [{:system, "ACCESS_KEY_ID"}, {:path, "path/to/credential"}],
+       secret_access_key: [{:system, "SECRET_ACCESS_KEY"}, {:path, "path/to/credential"}],
        region: "jp-east-1"
 ```
 
@@ -78,7 +78,7 @@ Usage
 
 `:ex_nifcloud` パッケージインストール済みのプロジェクトにて `iex -S mix` などで実施できます。
 
-`ExNifcloud.Operation.Query` でリクエストしたいクエリを作成し、 `|>` で `ExNifcloud.request(region: "jp-east-1")` へ渡すことでリクエストします。
+`ExNifcloud.Operation.Query` でリクエストしたいクエリを作成し、 `|>` で `ExNifcloud.request(region: "jp-east-1")` へ渡すことでリクエストします。
 
 ```elixir
 iex> %ExNifcloud.Operation.Query{
@@ -100,7 +100,7 @@ iex> %ExNifcloud.Operation.Query{
 }
 ```
 
-`ExNifcloud.Operation.Query` の `:parser` をユーザー独自のパーサーに置き換えることで `ExNifcloud.request` の戻り値を自由に変換することも可能です。
+`ExNifcloud.Operation.Query` の `:parser` をユーザー独自のパーサーに置き換えることで `ExNifcloud.request` の戻り値を自由に変換することも可能です。
 
 ```elixir
 iex> %ExNifcloud.Operation.Query{

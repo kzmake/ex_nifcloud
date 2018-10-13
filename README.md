@@ -103,13 +103,17 @@ iex> %ExNifcloud.Operation.Query{
 `ExNifcloud.Operation.Query` の `:parser` をユーザー独自のパーサーに置き換えることで `ExNifcloud.request` の戻り値を自由に変換することも可能です。
 
 ```elixir
-iex> %ExNifcloud.Operation.Query{
-      action: :describe_instances,
-      params: %{Action: "DescribeInstances"},
-      parser: &StatusCodeParser.parse/1,
-      path: "/api/",
-      service: :computing
-    } |> ExNifcloud.request
+iex> defmodule StatusCodeParser do
+       def parse({_, res}), do: res.status_code
+     end
+
+     %ExNifcloud.Operation.Query{
+       action: :describe_instances,
+       params: %{Action: "DescribeInstances"},
+       parser: &StatusCodeParser.parse/1,
+       path: "/api/",
+       service: :computing
+     } |> ExNifcloud.request
 
 200
 ```

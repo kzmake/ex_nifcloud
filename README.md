@@ -5,7 +5,7 @@ Description
 -----------
 
 パイプライン演算子好きのための Elixir 用 Nifcloud APIs の SDK です。
-このリポジトリは、 [ex-aws](https://github.com/ex-aws/ex_aws) を fork して Nifcloud APIs 用に変更されています。
+このリポジトリは、 [ex-aws](https://github.com/ex-aws/ex_aws) を fork して Nifcloud APIs 用に変更しています。
 
 
 Getting Started
@@ -123,7 +123,7 @@ Requirements
 
 このプロジェクトを実行するには以下が必要です:
 
-* [elixir](https://elixir-lang.org) 1.7.+
+* [elixir](https://elixir-lang.org) 1.6.+
 
 Contributing
 ------------

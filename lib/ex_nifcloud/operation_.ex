@@ -4,11 +4,3 @@ defprotocol ExNifcloud.Operation do
   """
   def perform(operation, config)
 end
-
-%ExNifcloud.Operation.Query{
-  action: :describe_instances,
-  params: %{"Action" => "DescribeInstances"},
-  parser: &ExNifcloud.Utils.identity/1,
-  path: "/api",
-  service: :computing
-}

@@ -3,19 +3,35 @@ defmodule ExNifcloud.MixProject do
 
   @version "0.0.1"
 
+  @description """
+    Unofficial Nifcloud SDK for Elixir
+  """
+
   def project do
     [
       app: :ex_nifcloud,
       version: @version,
-      elixir: "~> 1.7",
+      elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
-      description: "Unofficial Nifcloud SDK for Elixir",
+      description: @description,
       deps: deps(),
       docs: [
         main: "ExNifcloud",
         source_ref: "v#{@version}",
         source_url: "https://github.com/kzmake/ex_nifcloud"
       ]
+    ]
+  end
+
+  defp package do
+    [
+      description: @description,
+      files: ["priv", "lib", "config", "mix.exs", "README*"],
+      maintainers: ["kzmake"],
+      licenses: ["MIT"],
+      links: %{
+        github: "https://github.com/kzmake/ex_nifcloud"
+      }
     ]
   end
 
@@ -36,18 +52,6 @@ defmodule ExNifcloud.MixProject do
       {:mox, "~> 0.3", only: :test},
       {:bypass, "~> 0.7", only: :test},
       {:configparser_ex, "~> 2.0", optional: true}
-    ]
-  end
-
-  defp package do
-    [
-      description: "Unofficial Nifcloud SDK for Elixir",
-      files: ["priv", "lib", "config", "mix.exs", "README*"],
-      maintainers: ["Kazuki Iwata"],
-      licenses: ["MIT"],
-      links: %{
-        github: "https://github.com/kzmake/ex_nifcloud"
-      }
     ]
   end
 end

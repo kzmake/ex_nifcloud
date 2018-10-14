@@ -41,8 +41,7 @@ defmodule ExNifcloud.MixProject do
 
   defp package do
     [
-      description:
-        "Unofficial Nifcloud SDK for Elixir",
+      description: "Unofficial Nifcloud SDK for Elixir",
       files: ["priv", "lib", "config", "mix.exs", "README*"],
       maintainers: ["Kazuki Iwata"],
       licenses: ["MIT"],

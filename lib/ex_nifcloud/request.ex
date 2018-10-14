@@ -22,7 +22,7 @@ defmodule ExNifcloud.Request do
   end
 
   def request_and_retry(_method, _url, _service, _config, _headers, _req_body, {:error, reason}),
-      do: {:error, reason}
+    do: {:error, reason}
 
   def request_and_retry(method, url, service, config, headers, req_body, {:attempt, attempt}) do
     body = ExNifcloud.Auth.body(method, url, req_body, config)
@@ -30,7 +30,7 @@ defmodule ExNifcloud.Request do
     with {:ok, body} <- body do
       safe_url = replace_spaces(url)
 
-      body = body |> URI.encode_query
+      body = body |> URI.encode_query()
 
       if config[:debug_requests] do
         Logger.debug("Request Method: #{inspect(method)}}")
@@ -59,7 +59,6 @@ defmodule ExNifcloud.Request do
         {:ok, %{status_code: status} = resp} when status >= 500 ->
           {:error, resp}
 
-
         {:error, %{reason: reason}} ->
           Logger.warn("ExNifcloud: HTTP ERROR: #{inspect(reason)}")
       end
@@ -72,9 +71,9 @@ defmodule ExNifcloud.Request do
         error_type
         |> String.split("#")
         |> case do
-             [_, type] -> handle_nifcloud_error(type, message)
-             _ -> {:error, {:http_error, status, err}}
-           end
+          [_, type] -> handle_nifcloud_error(type, message)
+          _ -> {:error, {:http_error, status, err}}
+        end
 
       _ ->
         {:error, {:http_error, status, error}}

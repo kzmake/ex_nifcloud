@@ -8,7 +8,7 @@ end
 %ExNifcloud.Operation.Query{
   action: :describe_instances,
   params: %{"Action" => "DescribeInstances"},
-  parser: &ExNifcloud.Utils.identity/2,
+  parser: &ExNifcloud.Utils.identity/1,
   path: "/api",
   service: :computing
 }

@@ -1,6 +1,6 @@
 defmodule ExNifcloudTest do
   use ExUnit.Case
-  #doctest ExNifcloud
+  # doctest ExNifcloud
 
   test "request" do
     assert ExNifcloud.hello() == :world

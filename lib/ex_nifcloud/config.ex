@@ -12,7 +12,7 @@ defmodule ExNifcloud.Config do
     :access_key_id,
     :secret_access_key,
     :debug_requests,
-    :region,
+    :region
   ]
 
   @type t :: %{} | Keyword.t()
@@ -47,12 +47,20 @@ defmodule ExNifcloud.Config do
       },
       %{
         access_key_id: [{:system, "ACCESS_KEY_ID"}],
-        secret_access_key: [{:system, "SECRET_ACCESS_KEY"}, :instance_role],
+        secret_access_key: [{:system, "SECRET_ACCESS_KEY"}],
         http_client: ExNifcloud.Request.Hackney,
-        json_codec: Poison,
+        json_codec: Poison
       }
     )
-    |> Map.put(:host, build_host("{region}.{service}.{dnsSuffix}", Atom.to_string(service), region, "api.nifcloud.com"))
+    |> Map.put(
+      :host,
+      build_host(
+        "{region}.{service}.{dnsSuffix}",
+        Atom.to_string(service),
+        region,
+        "api.nifcloud.com"
+      )
+    )
   end
 
   def build_host(hostname, service, region, dns_suffix) do

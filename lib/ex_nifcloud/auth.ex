@@ -1,7 +1,4 @@
 defmodule ExNifcloud.Auth do
-  alias ExNifcloud.Auth.Credentials
-  alias ExNifcloud.Auth.Signatures
-
   @moduledoc false
 
   def body(http_method, url, body, config) do
@@ -21,8 +18,6 @@ defmodule ExNifcloud.Auth do
 
     data_string = data |> Enum.to_list() |> canonical_query_params |> URI.encode_query()
 
-    IO.inspect(data_string)
-
     signature = %{
       Signature: signature(http_method, uri.host, path, data_string, config[:secret_access_key])
     }
@@ -40,8 +35,7 @@ defmodule ExNifcloud.Auth do
   end
 
   def signature(http_method, host, path, data, secret_key) do
-    string_to_sign =
-      string_to_sign(http_method, host, path, data) |> generate_signaturev2(secret_key)
+    string_to_sign(http_method, host, path, data) |> generate_signaturev2(secret_key)
   end
 
   def string_to_sign(http_method, host, path, data) do

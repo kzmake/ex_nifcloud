@@ -14,7 +14,14 @@ end
 
 defimpl ExNifcloud.Operation, for: ExNifcloud.Operation.Query do
   def perform(operation, config) do
-    data = operation.params
+    action =
+      operation.action
+      |> Atom.to_string()
+      |> Macro.camelize()
+
+    data =
+      operation.params
+      |> Map.merge(%{Action: action})
 
     url =
       operation
